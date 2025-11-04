@@ -43,6 +43,7 @@ void free(void *ptr)
 
     t_block *block = (t_block *)ptr - 1;
     block->free = 1;
+
     t_zone *zone = g_zones;
     while (zone)
     {
@@ -52,12 +53,13 @@ void free(void *ptr)
             if (b == block)
             {
                 merge_free_blocks(zone);
-                break;
+                goto done; // stop after finding the zone
             }
             b = b->next;
         }
         zone = zone->next;
     }
 
+done:
     pthread_mutex_unlock(&g_malloc_mutex);
 }

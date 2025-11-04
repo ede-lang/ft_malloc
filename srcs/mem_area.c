@@ -20,11 +20,12 @@ static size_t get_zone_size(t_zone_type type)
     if (type == TINY)
         return PAGE_SIZE * 4;
     else if (type == SMALL)
-        return PAGE_SIZE * 32;
+        return PAGE_SIZE * 26;
+        // return PAGE_SIZE * 32;
     return 0;
 }
 
-static t_zone *create_zone(t_zone_type type, size_t size)
+static t_zone *create_zone(t_zone_type type, size_t first_block_size)
 {
     size_t zone_size = get_zone_size(type);
     t_zone *zone = mmap(NULL, zone_size, PROT_READ | PROT_WRITE,
@@ -35,17 +36,20 @@ static t_zone *create_zone(t_zone_type type, size_t size)
     zone->type = type;
     zone->size = zone_size;
     zone->next = NULL;
-    zone->mem = (void *)zone + sizeof(t_zone);
+    zone->mem = (void *)((char *)zone + sizeof(t_zone));
+    zone->used = 0;
 
     t_block *block = (t_block *)zone->mem;
-    block->size = size;
+    block->size = first_block_size;
     block->free = 0;
     block->next = NULL;
 
     zone->blocks = block;
+    zone->used = sizeof(t_block) + first_block_size;
 
     return zone;
 }
+
 
 void *allocate_in_zone(t_zone_type type, size_t size)
 {
@@ -65,11 +69,22 @@ void *allocate_in_zone(t_zone_type type, size_t size)
                 }
                 block = block->next;
             }
+
+            if (zone->size - zone->used >= sizeof(t_block) + size)
+            {
+                t_block *new_block = (t_block *)((char *)zone->mem + zone->used);
+                new_block->size = size;
+                new_block->free = 0;
+                new_block->next = zone->blocks;
+                zone->blocks = new_block;
+
+                zone->used += sizeof(t_block) + size;
+                return (void *)(new_block + 1);
+            }
         }
+
         zone = zone->next;
     }
-
-    // Create a new zone if needed
     t_zone *new_zone = create_zone(type, size);
     if (!new_zone)
         return NULL;
@@ -78,6 +93,7 @@ void *allocate_in_zone(t_zone_type type, size_t size)
     g_zones = new_zone;
     return (void *)(new_zone->blocks + 1);
 }
+
 
 void *allocate_large(size_t size)
 {

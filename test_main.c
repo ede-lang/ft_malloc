@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "ft_malloc.h"
+// #include "ft_malloc.h"
 
 int main(void)
 {
@@ -61,8 +62,8 @@ int main(void)
     printf("re (after shrink) = \"%s\"\n", re);
     
     printf("printing details :\n");
-    ft_show_alloc_mem();
-    ft_show_alloc_mem_ex();
+    // ft_show_alloc_mem();
+    // ft_show_alloc_mem_ex();
 
     printf("\n=== Test free ===\n");
     free(arr);
@@ -70,7 +71,7 @@ int main(void)
     
     printf("All tests done!\n");
 
-    ft_show_alloc_mem_ex();
+    // ft_show_alloc_mem_ex();
 
     return 0;
 }

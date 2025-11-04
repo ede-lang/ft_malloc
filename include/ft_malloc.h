@@ -32,17 +32,18 @@ typedef enum e_zone_type {
 } t_zone_type;
 
 typedef struct s_block {
-    size_t size;
-    int free;
+    size_t  size;
+    int     free;
     struct s_block *next;
 } t_block;
 
 typedef struct s_zone {
-    t_zone_type type;
-    size_t size;
-    struct s_zone *next;
-    t_block *blocks;
-    void *mem;
+    t_zone_type     type;
+    size_t          size;
+    size_t          used;
+    struct s_zone   *next;
+    t_block         *blocks;
+    void            *mem;
 } t_zone;
 
 extern t_zone *g_zones;
