@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 14:50:40 by ede-lang          #+#    #+#             */
+/*   Created: 2025/07/01 14:50:40 by ede-lang          #+#    #+#             */
 /*   Updated: 2025/10/21 10:58:30 by ede-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
-#include "malloc.h"
+#include "ft_malloc.h"
 
 int main(void)
 {
@@ -31,7 +31,7 @@ int main(void)
     if (!re)
     {
         perror("realloc failed");
-        free(str); // on libère l’ancien si realloc échoue
+        free(str);
         return 1;
     }
     strcat(re, " (realloc OK)");
@@ -59,11 +59,18 @@ int main(void)
         return 1;
     }
     printf("re (after shrink) = \"%s\"\n", re);
+    
+    printf("printing details :\n");
+    ft_show_alloc_mem();
+    ft_show_alloc_mem_ex();
 
     printf("\n=== Test free ===\n");
     free(arr);
     free(re);
-
+    
     printf("All tests done!\n");
+
+    ft_show_alloc_mem_ex();
+
     return 0;
 }

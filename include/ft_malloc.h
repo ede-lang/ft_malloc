@@ -49,13 +49,15 @@ extern t_zone *g_zones;
 extern pthread_mutex_t g_malloc_mutex;
 
 int is_debug_mode(void);
-void   *allocate_in_zone(t_zone_type type, size_t size);
-void   *allocate_large(size_t size);
+
+void            *allocate_in_zone(t_zone_type type, size_t size);
+void            *allocate_large(size_t size);
 
 void			*malloc(size_t size);
 void			free(void *ptr);
 void			*calloc(size_t num, size_t size);
 void			*realloc(void *ptr, size_t size);
-void			show_alloc_mem(void);
+void			ft_show_alloc_mem(void);
+void            ft_show_alloc_mem_ex(void);
 
 #endif

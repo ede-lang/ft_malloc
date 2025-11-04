@@ -71,7 +71,7 @@ test: all
 
 # Règle pour lancer le test avec preload
 test_run: test
-	LD_PRELOAD=$(PWD)/$(LINK_NAME) ./test_malloc
+	LD_LIBRARY_PATH=$(PWD) ./test_malloc
 
 clean:
 	$(RM) $(OBJS)

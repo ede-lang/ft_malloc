@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
-
+/**
+ * @brief this functiom merge blocks
+ * 
+ * @param zone area to merge
+ */
 void merge_free_blocks(t_zone *zone)
 {
     t_block *cur = zone->blocks;
@@ -39,7 +43,6 @@ void free(void *ptr)
 
     t_block *block = (t_block *)ptr - 1;
     block->free = 1;
-
     t_zone *zone = g_zones;
     while (zone)
     {
