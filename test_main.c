@@ -6,14 +6,14 @@
 /*   By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:50:40 by ede-lang          #+#    #+#             */
-/*   Updated: 2025/10/21 10:58:30 by ede-lang         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:44:40 by ede-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <string.h>
-// #include "ft_malloc.h"
+#include "ft_malloc.h"
 
 int main(void)
 {

@@ -5,13 +5,9 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/08 08:59:31 by ede-lang          #+#    #+#              #
-#    Updated: 2025/10/30 12:03:25 by ede-lang         ###   ########.fr        #
+#    Created: 2025/11/04 16:39:11 by ede-lang          #+#    #+#              #
+#    Updated: 2025/11/04 16:41:07 by ede-lang         ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
-
-# **************************************************************************** #
-#                                   CONFIG                                     #
 # **************************************************************************** #
 
 # Vérifie et définit HOSTTYPE si nécessaire
@@ -24,8 +20,7 @@ LINK_NAME   = libft_malloc.so
 
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -fPIC -I include -I libft/include -g
-RM          = rm -f
-AR          = ar rcs
+RM          = rm -rf
 MKDIR       = mkdir -p
 
 # Dossiers
@@ -45,6 +40,8 @@ all: $(NAME) $(LINK_NAME)
 
 # Compilation de la lib partagée (malloc custom)
 $(NAME): $(OBJS)
+	@echo "→ Building libft first"
+	$(MAKE) -C $(LIBFT_DIR)
 	@echo "→ Building $(NAME)"
 	$(CC) $(CFLAGS) -shared -o $@ $^ -L$(LIBFT_DIR) -lft
 
@@ -61,9 +58,9 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 $(OBJS_DIR):
 	$(MKDIR) $(OBJS_DIR)
 
-# Compilation de la libft si besoin
-$(LIBFT_DIR)/libft.a:
-	$(MAKE) -C $(LIBFT_DIR)
+# **************************************************************************** #
+#                               TEST / RUN RULES                               #
+# **************************************************************************** #
 
 # Test avec un main
 test: all
@@ -73,11 +70,21 @@ test: all
 test_run: test
 	LD_LIBRARY_PATH=$(PWD) ./test_malloc
 
+# **************************************************************************** #
+#                               CLEANING RULES                                 #
+# **************************************************************************** #
+
 clean:
-	$(RM) $(OBJS)
+	@echo "→ Cleaning malloc objects"
+	$(RM) $(OBJS_DIR)
+	@echo "→ Cleaning libft"
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
+	@echo "→ Removing malloc shared lib and symlink"
 	$(RM) $(NAME) $(LINK_NAME) test_malloc
+	@echo "→ Full cleaning libft"
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
