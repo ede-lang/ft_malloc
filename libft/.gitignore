@@ -1,0 +1,6 @@
+libft.a
+a.out
+obj/
+*.o
+.vscode/*
+
