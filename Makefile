@@ -6,7 +6,7 @@
 #    By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/04 16:39:11 by ede-lang          #+#    #+#              #
-#    Updated: 2025/11/04 16:41:07 by ede-lang         ###   ########.fr        #
+#    Updated: 2025/11/05 11:11:45 by ede-lang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ LINK_NAME   = libft_malloc.so
 
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -fPIC -I include -I libft/include -g
+TESTFLAG    = -fPIC -I include -I libft/include -g
 RM          = rm -rf
 MKDIR       = mkdir -p
 
@@ -64,7 +65,7 @@ $(OBJS_DIR):
 
 # Test avec un main
 test: all
-	$(CC) $(CFLAGS) test_main.c -L. -lft_malloc -L$(LIBFT_DIR) -lft -o test_malloc
+	$(CC) $(TESTFLAG) test_main.c -L. -lft_malloc -L$(LIBFT_DIR) -lft -o test_malloc
 
 # Règle pour lancer le test avec preload
 test_run: test

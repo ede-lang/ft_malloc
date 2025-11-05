@@ -1,77 +1,39 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 14:50:40 by ede-lang          #+#    #+#             */
-/*   Updated: 2025/11/04 16:44:40 by ede-lang         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <stdio.h>
-// #include <stdlib.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
 #include "ft_malloc.h"
 
-int main(void)
+void print(char *s)
 {
-    printf("=== Test malloc ===\n");
-    char *str = malloc(20);
-    if (!str)
+    write(1, s, strlen(s));
+}
+
+#define M (1024 * 1024)
+
+int     main()
+{
+    int     i;
+    int     alignment;
+    char    *addr;
+
+    i = 1;
+    alignment = 2 * sizeof(size_t);
+    while (i <= 100)
     {
-        perror("malloc failed");
-        return 1;
+        addr = (char*)malloc(i);
+        if (addr == NULL)
+        {
+            print("Failed to allocate memory\n");
+            exit(1);
+        }
+        if ((((unsigned long) (addr)) % alignment) != 0)
+        {
+            print("malloc returned a non aligned boundary\n");
+            exit(1);
+        }
+        i++;
+        free(addr);
     }
-    strcpy(str, "Hello malloc!");
-    printf("str = \"%s\"\n", str);
-
-    printf("\n=== Test realloc (agrandir) ===\n");
-    char *re = realloc(str, 40);
-    if (!re)
-    {
-        perror("realloc failed");
-        free(str);
-        return 1;
-    }
-    strcat(re, " (realloc OK)");
-    printf("re = \"%s\"\n", re);
-
-    printf("\n=== Test calloc ===\n");
-    int *arr = calloc(5, sizeof(int));
-    if (!arr)
-    {
-        perror("calloc failed");
-        free(re);
-        return 1;
-    }
-    printf("calloc 5 ints: ");
-    for (int i = 0; i < 5; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
-
-    printf("\n=== Test realloc (rétrécir) ===\n");
-    re = realloc(re, 10);
-    if (!re)
-    {
-        perror("realloc failed (shrink)");
-        free(arr);
-        return 1;
-    }
-    printf("re (after shrink) = \"%s\"\n", re);
-    
-    printf("printing details :\n");
-    // ft_show_alloc_mem();
-    // ft_show_alloc_mem_ex();
-
-    printf("\n=== Test free ===\n");
-    free(arr);
-    free(re);
-    
-    printf("All tests done!\n");
-
-    // ft_show_alloc_mem_ex();
-
-    return 0;
+    return (0); 
 }

@@ -6,16 +6,13 @@
 /*   By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 09:53:32 by ede-lang          #+#    #+#             */
-/*   Updated: 2025/10/30 12:00:21 by ede-lang         ###   ########.fr       */
+/*   Updated: 2025/11/05 11:54:50 by ede-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
-/**
- * @brief this functiom merge blocks
- * 
- * @param zone area to merge
- */
+
+
 void merge_free_blocks(t_zone *zone)
 {
     t_block *cur = zone->blocks;

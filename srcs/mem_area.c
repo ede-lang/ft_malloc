@@ -6,7 +6,7 @@
 /*   By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 11:30:49 by ede-lang          #+#    #+#             */
-/*   Updated: 2025/10/30 12:00:30 by ede-lang         ###   ########.fr       */
+/*   Updated: 2025/11/05 13:23:05 by ede-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static size_t get_zone_size(t_zone_type type)
         return PAGE_SIZE * 4;
     else if (type == SMALL)
         return PAGE_SIZE * 26;
-        // return PAGE_SIZE * 32;
     return 0;
 }
 

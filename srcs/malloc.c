@@ -6,7 +6,7 @@
 /*   By: ede-lang <ede-lang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 14:51:28 by ede-lang          #+#    #+#             */
-/*   Updated: 2025/10/30 12:00:25 by ede-lang         ###   ########.fr       */
+/*   Updated: 2025/11/05 13:33:09 by ede-lang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void *malloc(size_t size)
 {
     if (is_debug_mode())
-        printf("[MALLOC_DEBUG] Allocating %zu bytes\n", size);
+        ft_printf("[MALLOC_DEBUG] Allocating %u bytes\n", size);
 
     void *ptr;
 
